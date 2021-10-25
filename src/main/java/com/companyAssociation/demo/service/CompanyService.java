@@ -50,6 +50,10 @@ public class CompanyService {
 	}
 	
 	public void deleteCompany(long id) {
+//		Company com = companyDao.findById(id).get();
+//		ManagerHr managerId = com.getManagerHr();
+//		long mId = managerId.getId();
+//		mhDao.deleteById(mId);
 		companyDao.deleteById(id);
 	}
 }

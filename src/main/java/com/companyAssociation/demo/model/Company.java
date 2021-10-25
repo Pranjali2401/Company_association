@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -29,7 +30,7 @@ public class Company implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="company_id")
 	private long id;
 	
@@ -42,7 +43,7 @@ public class Company implements Serializable{
 	private String domain;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "company")
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "company")
 	private List<Job> openJobs;
 	
 	@OneToOne(cascade = CascadeType.ALL)
