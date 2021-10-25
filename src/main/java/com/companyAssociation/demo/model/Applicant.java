@@ -5,12 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="applicant_table")
@@ -28,10 +31,11 @@ public class Applicant implements Serializable {
 	private String name;
 	private String skills[];
 	
-	@ManyToMany(mappedBy = "jobApplication")
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "jobApplications")
 	private List<Job> appliedJob;
 
-	public long getId() {
+	public long getId() { 
 		return id;
 	}
 
@@ -63,9 +67,6 @@ public class Applicant implements Serializable {
 		this.appliedJob = appliedJob;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	@Override
 	public int hashCode() {

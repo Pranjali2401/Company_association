@@ -33,9 +33,14 @@ public class CompanyController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateCompany(@RequestBody Company company, long id){
+	public ResponseEntity<String> updateCompany(@RequestBody Company company,@PathVariable long id){
 		companyService.updateCompany(company, id);
 		return new ResponseEntity<String>("Update Company details", HttpStatus.OK);
+	}
+	
+	@PutMapping("/{cid}/managerhr/{mid}")
+	public ResponseEntity<Company> addManagerIntoCompany(@PathVariable long cid,@PathVariable long mid){
+		return new ResponseEntity<Company>(companyService.addManager(cid, mid), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")

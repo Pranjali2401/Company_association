@@ -4,18 +4,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.companyAssociation.demo.dao.CompanyDao;
+import com.companyAssociation.demo.dao.ManagerHrDao;
 import com.companyAssociation.demo.model.Company;
+import com.companyAssociation.demo.model.Job;
+import com.companyAssociation.demo.model.ManagerHr;
 
 @Service
 public class CompanyService {
 
 	@Autowired
 	CompanyDao companyDao;
+	
+	@Autowired
+	ManagerHrDao mhDao;
 
-	public Company addCompany(Company company) {
+	public Company addCompany(Company company) {	
 		Company com = companyDao.save(company);
 		return com;
 
+	}
+	
+	public Company addManager(long companyId, long managerId) {
+		Company co = companyDao.findById(companyId).get();
+		ManagerHr mh = mhDao.findById(managerId).get();
+	
+		co.setManagerHr(mh);
+		Company com =  companyDao.save(co);
+		return com;
 	}
 	
 	public Company getCompany(long id) {

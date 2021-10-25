@@ -3,6 +3,7 @@ package com.companyAssociation.demo.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,25 +13,26 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="manager_hr_table")
+@Table(name = "manager_hr_table")
 public class ManagerHr implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
-	@Column(name="manager_id")
+	@Column(name = "manager_id")
 	private long id;
-	
-	@Column(name="manager_name")
+
+	@Column(name = "manager_name")
 	private String name;
-	
-	@OneToOne(mappedBy = "managerHr")
+
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "managerHr")
 	private Company company;
 
+	
 	public long getId() {
 		return id;
 	}
@@ -45,14 +47,6 @@ public class ManagerHr implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
 	}
 
 	public static long getSerialversionuid() {
@@ -80,7 +74,5 @@ public class ManagerHr implements Serializable {
 	public String toString() {
 		return "ManagerHr [id=" + id + ", name=" + name + ", company=" + company + "]";
 	}
-	
 
-	
 }

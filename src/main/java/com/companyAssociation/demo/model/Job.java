@@ -2,9 +2,11 @@ package com.companyAssociation.demo.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,17 +40,17 @@ public class Job implements Serializable {
 	@Column(name="payscale")
 	private long payScale;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="company_id")
 	private Company company;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			name="job_application",
 			joinColumns = @JoinColumn(name="job_id"),
 			inverseJoinColumns = @JoinColumn(name="applicant_id")
 			)
-	private Set<Applicant> jobApplication;
+	private Set<Applicant> jobApplications = new HashSet<>();
 
 	public long getId() {
 		return id;
@@ -91,15 +93,11 @@ public class Job implements Serializable {
 	}
 
 	public Set<Applicant> getJobApplication() {
-		return jobApplication;
+		return jobApplications;
 	}
 
-	public void setJobApplication(Set<Applicant> jobApplication) {
-		this.jobApplication = jobApplication;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setJobApplication(Applicant jobApplication) {
+		jobApplications.add(jobApplication);
 	}
 
 	@Override
@@ -107,7 +105,7 @@ public class Job implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Arrays.hashCode(requiredSkill);
-		result = prime * result + Objects.hash(company, id, jobApplication, jobTitle, payScale);
+		result = prime * result + Objects.hash(company, id, jobApplications, jobTitle, payScale);
 		return result;
 	}
 
@@ -121,17 +119,15 @@ public class Job implements Serializable {
 			return false;
 		Job other = (Job) obj;
 		return Objects.equals(company, other.company) && id == other.id
-				&& Objects.equals(jobApplication, other.jobApplication) && Objects.equals(jobTitle, other.jobTitle)
+				&& Objects.equals(jobApplications, other.jobApplications) && Objects.equals(jobTitle, other.jobTitle)
 				&& payScale == other.payScale && Arrays.equals(requiredSkill, other.requiredSkill);
 	}
 
 	@Override
 	public String toString() {
 		return "Job [id=" + id + ", jobTitle=" + jobTitle + ", requiredSkill=" + Arrays.toString(requiredSkill)
-				+ ", payScale=" + payScale + ", company=" + company + ", jobApplication=" + jobApplication + "]";
+				+ ", payScale=" + payScale + ", company=" + company + ", jobApplications=" + jobApplications + "]";
 	}
-	
-	
-	
+
 
 }

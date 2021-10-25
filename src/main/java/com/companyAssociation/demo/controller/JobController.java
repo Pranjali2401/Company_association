@@ -37,7 +37,15 @@ public class JobController {
 		jobService.updateJob(job, id);
 		return new ResponseEntity<String>("Update Job Successfully !", HttpStatus.OK);
 	}
+	@PutMapping("/{jId}/company/{cId}")
+	public ResponseEntity<Job> addCompany(@PathVariable long jId,@PathVariable long cId){
+		return new ResponseEntity<Job>(jobService.addCompany(jId, cId),HttpStatus.CREATED);
+	}
 
+	@PutMapping("/{jId}/applicant/{aId}")
+	public ResponseEntity<Job> addApplicant(@PathVariable long jId, @PathVariable long aId){
+		return new ResponseEntity<Job>(jobService.addApplicant(jId, aId), HttpStatus.CREATED);
+	}
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteJob(@PathVariable long id) {
 		jobService.DeleteJob(id);
