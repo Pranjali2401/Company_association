@@ -1,5 +1,7 @@
 package com.companyAssociation.demo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.companyAssociation.demo.dto.ApplicantDtoIn;
+import com.companyAssociation.demo.dto.ApplicantDtoOut;
 import com.companyAssociation.demo.model.Applicant;
 import com.companyAssociation.demo.service.ApplicantService;
 
@@ -22,13 +26,13 @@ public class ApplicantController {
 	ApplicantService applicantService;
 	
 	@PostMapping("/")
-	public ResponseEntity<Applicant> addApplicant(@RequestBody Applicant applicant){
-		return new ResponseEntity<Applicant>(applicantService.addApplicant(applicant),HttpStatus.OK);
+	public ResponseEntity<ApplicantDtoOut> addApplicant(@RequestBody @Valid ApplicantDtoIn applicant){
+		return new ResponseEntity<ApplicantDtoOut>(applicantService.addApplicant(applicant),HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Applicant> getApplicant(@PathVariable long id){
-		return new ResponseEntity<Applicant>(applicantService.getApplicant(id),HttpStatus.OK);
+	public ResponseEntity<ApplicantDtoOut> getApplicant(@PathVariable long id){
+		return new ResponseEntity<ApplicantDtoOut>(applicantService.getApplicant(id),HttpStatus.OK);
 		
 	}
 	

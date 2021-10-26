@@ -1,5 +1,7 @@
 package com.companyAssociation.demo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.companyAssociation.demo.dto.CompanyDtoIn;
+import com.companyAssociation.demo.dto.CompanyDtoOut;
 import com.companyAssociation.demo.model.Company;
 import com.companyAssociation.demo.service.CompanyService;
 
@@ -23,13 +27,13 @@ public class CompanyController {
 	CompanyService companyService;
 
 	@PostMapping("/")
-	public ResponseEntity<Company> addCompany(@RequestBody Company company) {
-		return new ResponseEntity<Company>(companyService.addCompany(company), HttpStatus.CREATED);
+	public ResponseEntity<CompanyDtoOut> addCompany(@RequestBody @Valid CompanyDtoIn company) {
+		return new ResponseEntity<CompanyDtoOut>(companyService.addCompany(company), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Company> getCompany(@PathVariable long id) {
-		return new ResponseEntity<Company>(companyService.getCompany(id), HttpStatus.OK);
+	public ResponseEntity<CompanyDtoOut> getCompany(@PathVariable long id) {
+		return new ResponseEntity<CompanyDtoOut>(companyService.getCompany(id), HttpStatus.OK);
 	}
 	
 	@PutMapping("/{id}")

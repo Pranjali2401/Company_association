@@ -2,6 +2,8 @@ package com.companyAssociation.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.companyAssociation.demo.dto.ManagerHrDtoIn;
+import com.companyAssociation.demo.dto.ManagerHrDtoOut;
 import com.companyAssociation.demo.model.ManagerHr;
 import com.companyAssociation.demo.service.ManagerHrService;
 
@@ -25,22 +29,22 @@ public class ManagerHrController {
 	ManagerHrService managerHrService;
 
 	@PostMapping("/")
-	public ResponseEntity<ManagerHr> addManaherHr(@RequestBody ManagerHr mh) {
-		return new ResponseEntity<ManagerHr>(managerHrService.addManagerHr(mh), HttpStatus.OK);
+	public ResponseEntity<ManagerHrDtoOut> addManaherHr(@RequestBody @Valid ManagerHrDtoIn mh) {
+		return new ResponseEntity<ManagerHrDtoOut>(managerHrService.addManagerHr(mh), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<List<ManagerHr>> getAllManager() {
-		return new ResponseEntity<List<ManagerHr>>(managerHrService.getAllManagerHr(), HttpStatus.OK);
+	public ResponseEntity<List<ManagerHrDtoOut>> getAllManager() {
+		return new ResponseEntity<List<ManagerHrDtoOut>>(managerHrService.getAllManagerHr(), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ManagerHr> getManagerHr(@PathVariable long id) {
-		return new ResponseEntity<ManagerHr>(managerHrService.getManagerHr(id), HttpStatus.OK);
+	public ResponseEntity<ManagerHrDtoOut> getManagerHr(@PathVariable long id) {
+		return new ResponseEntity<ManagerHrDtoOut>(managerHrService.getManagerHr(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateManagerHr(@RequestBody ManagerHr managerHr, @PathVariable long id) {
+	public ResponseEntity<String> updateManagerHr(@RequestBody @Valid ManagerHrDtoIn managerHr, @PathVariable long id) {
 		managerHrService.updateManagerHr(managerHr, id);
 		return new ResponseEntity<String>("Update Successfully !", HttpStatus.OK);
 
