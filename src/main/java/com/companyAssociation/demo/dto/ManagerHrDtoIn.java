@@ -1,20 +1,18 @@
 package com.companyAssociation.demo.dto;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
-import org.springframework.validation.annotation.Validated;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 public class ManagerHrDtoIn {
 
-	@NotBlank(message = "Name is Required")
+	@NotEmpty(message = "Name is Required")
 	public String name;
-	
-	public ManagerHrDtoIn(@JsonProperty("name") String name) {
-	    this.name = name;
-	}
 
+	@JsonCreator
+	public ManagerHrDtoIn(@JsonProperty("name") String name) {
+		this.name = name;
+	}
 
 }

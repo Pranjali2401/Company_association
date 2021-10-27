@@ -29,7 +29,7 @@ public class ManagerHrController {
 	ManagerHrService managerHrService;
 
 	@PostMapping("/")
-	public ResponseEntity<ManagerHrDtoOut> addManaherHr(@RequestBody @Valid ManagerHrDtoIn mh) {
+	public ResponseEntity<ManagerHrDtoOut> addManaherHr(@Valid @RequestBody ManagerHrDtoIn mh) {
 		return new ResponseEntity<ManagerHrDtoOut>(managerHrService.addManagerHr(mh), HttpStatus.OK);
 	}
 

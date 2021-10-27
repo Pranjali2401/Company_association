@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.companyAssociation.demo.dao.ApplicantDao;
 import com.companyAssociation.demo.dao.CompanyDao;
 import com.companyAssociation.demo.dao.JobDao;
+import com.companyAssociation.demo.dto.JobDtoIn;
+import com.companyAssociation.demo.dto.JobDtoOut;
 import com.companyAssociation.demo.model.Applicant;
 import com.companyAssociation.demo.model.Company;
 import com.companyAssociation.demo.model.Job;
@@ -24,10 +26,33 @@ public class JobService {
 
 	@Autowired
 	CompanyDao companyDao;
+	
+//	convert into dto
+	public JobDtoOut buildJobDto(Job job) {
+		
+		JobDtoOut jobDto = new JobDtoOut();
+		
+		jobDto.id = job.getId();
+		jobDto.jobTitle = job.getJobTitle();
+		jobDto.requiredSkill = job.getRequiredSkill();
+		jobDto.company = job.getCompany();
+		jobDto.jobApplications = job.getJobApplication();
+		return jobDto;
+	}
 
-	public Job addJob(Job j) {
-		Job job = jobDao.save(j);
+	public Job buildJob(JobDtoIn jobDto) {
+		Job job = new Job();
+		
+		job.setJobTitle(jobDto.jobTitle);
+		job.setPayScale(jobDto.payScale);
+		job.setRequiredSkill(jobDto.requiredSkill);
+		
 		return job;
+	}
+	public JobDtoOut addJob(JobDtoIn j) {
+		Job job = buildJob(j);
+		job = jobDao.save(job);
+		return buildJobDto(job);
 	}
 
 	public Job addCompany(long jobId, long companyId) {
@@ -48,8 +73,9 @@ public class JobService {
 		return jobDao.save(job);
 	}
 
-	public Job getJob(long id) {
-		return jobDao.findById(id).get();
+	public JobDtoOut getJob(long id) {
+		Job j = jobDao.findById(id).get();
+		return buildJobDto(j);
 	}
 
 	public void updateJob(Job job, long id) {

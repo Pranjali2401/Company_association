@@ -15,7 +15,7 @@ import com.companyAssociation.demo.model.ManagerHr;
 public class ManagerHrService {
 
 	@Autowired
-	ManagerHrDao managerDao;
+	private ManagerHrDao managerDao;
 
 //convert into dto
 	public ManagerHrDtoOut buildManagerHrDto(ManagerHr mHr) {
@@ -25,17 +25,17 @@ public class ManagerHrService {
 		return managerherHrDtoOut;
 
 	}
-	
+
 	public List<ManagerHrDtoOut> buildManagerHrDto(List<ManagerHr> mHr) {
 		List<ManagerHrDtoOut> list = new ArrayList<>();
-		
-		mHr.forEach(eachManager->{
+
+		mHr.forEach(eachManager -> {
 			ManagerHrDtoOut managerherHrDtoOut = new ManagerHrDtoOut();
 			managerherHrDtoOut.id = eachManager.getId();
 			managerherHrDtoOut.name = eachManager.getName();
 			list.add(managerherHrDtoOut);
 		});
-		
+
 		return list;
 
 	}
@@ -49,7 +49,7 @@ public class ManagerHrService {
 
 	public ManagerHrDtoOut addManagerHr(ManagerHrDtoIn mh) {
 		ManagerHr managerHr = buildManagerHr(mh);
-	    managerHr = managerDao.save(managerHr);
+		managerHr = managerDao.save(managerHr);
 		return buildManagerHrDto(managerHr);
 	}
 

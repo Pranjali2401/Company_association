@@ -1,5 +1,10 @@
 package com.companyAssociation.demo.service;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +17,9 @@ import com.companyAssociation.demo.model.Applicant;
 public class ApplicantService {
 
 	@Autowired
-	ApplicantDao applicantDao;
+	private ApplicantDao applicantDao;
 	
+
 //	convert into entity
 	public Applicant buildApplicant(ApplicantDtoIn appDtoIn) {
 		Applicant app = new Applicant();
@@ -31,14 +37,15 @@ public class ApplicantService {
 		return appDtoOut;
 		
 	}
-	public ApplicantDtoOut addApplicant(ApplicantDtoIn applicant) {
+	
+	public ApplicantDtoOut addApplicant(ApplicantDtoIn applicant) {          
+            
 		Applicant app = buildApplicant(applicant);
-		app = applicantDao.save(app);
-		
+		app = applicantDao.save(app);	
 		return buildApplicantDto(app);
 		
 	}
-	
+
 	public ApplicantDtoOut getApplicant(long id) {
 		Applicant app = applicantDao.findById(id).get();
 		return buildApplicantDto(app);
