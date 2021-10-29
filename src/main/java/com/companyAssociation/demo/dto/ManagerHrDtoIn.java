@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ManagerHrDtoIn {
 
-	@NotEmpty(message = "Name is Required")
+	@NotEmpty(message = "ManagerHr Name is Required")
 	public String name;
 
 	@JsonCreator

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.companyAssociation.demo.dao.ManagerHrDao;
 import com.companyAssociation.demo.dto.ManagerHrDtoIn;
 import com.companyAssociation.demo.dto.ManagerHrDtoOut;
+import com.companyAssociation.demo.exception.NoDataFoundException;
 import com.companyAssociation.demo.model.ManagerHr;
 
 @Service
@@ -25,7 +27,7 @@ public class ManagerHrService {
 		return managerherHrDtoOut;
 
 	}
-
+//List of managerHr Dto
 	public List<ManagerHrDtoOut> buildManagerHrDto(List<ManagerHr> mHr) {
 		List<ManagerHrDtoOut> list = new ArrayList<>();
 
@@ -48,13 +50,21 @@ public class ManagerHrService {
 	}
 
 	public ManagerHrDtoOut addManagerHr(ManagerHrDtoIn mh) {
-		ManagerHr managerHr = buildManagerHr(mh);
-		managerHr = managerDao.save(managerHr);
+		ManagerHr managerHr;
+//		try {
+			managerHr = buildManagerHr(mh);
+			managerHr = managerDao.save(managerHr);
+			
+//		} catch (DataIntegrityViolationException e) {
+//			// TODO: handle exception
+//			System.out.println("DataIntegrityViolationException******************");
+//			throw new DataIntegrityViolationException("Data is dublicate");
+//		}
 		return buildManagerHrDto(managerHr);
 	}
 
 	public ManagerHrDtoOut getManagerHr(long id) {
-		ManagerHr m = managerDao.findById(id).get();
+		ManagerHr m = managerDao.findById(id).orElseThrow(() -> new NoDataFoundException("MangerHr Id not found") );
 		return buildManagerHrDto(m);
 	}
 

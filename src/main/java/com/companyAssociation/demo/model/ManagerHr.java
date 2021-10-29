@@ -29,7 +29,7 @@ public class ManagerHr implements Serializable {
 	private long id;
 
 	
-	@Column(name = "manager_name")
+	@Column(name = "manager_name", unique = true)
 	private String name;
 
 	@OneToOne(cascade = CascadeType.ALL , mappedBy = "managerHr")
